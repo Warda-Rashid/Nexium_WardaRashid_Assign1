@@ -1,30 +1,32 @@
+// src/app/page.tsx
 "use client"; // This directive should be at the very top
-import { quotes } from '@/data/quotes';
-import type { Quote } from '@/data/quotes'; // This is crucialrm -rf node_modules package-lock.json
+
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card"; // CORRECTED: Removed unused CardDescription, CardHeader, CardTitle
+import { Card, CardContent } from "@/components/ui/card";
+import { quotes } from '@/data/quotes'; // ONLY import 'quotes', not 'Quote'
 
+// Define the Quote interface DIRECTLY HERE
+interface Quote {
+  text: string;
+  topic: string;
+}
 
 export default function QuoteGenerator() {
   const [topic, setTopic] = useState<string>('');
-  const [displayedQuotes, setDisplayedQuotes] = useState<Quote[]>([]);
+  const [displayedQuotes, setDisplayedQuotes] = useState<Quote[]>([]); // This 'Quote' now refers to the local interface
 
   const generateQuotes = () => {
-    // Filter quotes based on topic (case-insensitive)
-    const filteredQuotes = quotes.filter(quote => // CORRECTED: Used 'quotes'
+    const filteredQuotes = quotes.filter(quote =>
       quote.topic.toLowerCase().includes(topic.toLowerCase())
     );
 
-    // If no topic or no matching quotes, show a random selection
     let quotesToShow: Quote[] = [];
     if (topic === '' || filteredQuotes.length === 0) {
-      // Get 3 random unique quotes if no specific topic or no matches
-      const shuffledQuotes = [...quotes].sort(() => 0.5 - Math.random()); // CORRECTED: Used 'quotes'
+      const shuffledQuotes = [...quotes].sort(() => 0.5 - Math.random());
       quotesToShow = shuffledQuotes.slice(0, 3);
     } else {
-      // Otherwise, get 3 random unique quotes from the filtered list
       const shuffledFilteredQuotes = [...filteredQuotes].sort(() => 0.5 - Math.random());
       quotesToShow = shuffledFilteredQuotes.slice(0, 3);
     }
