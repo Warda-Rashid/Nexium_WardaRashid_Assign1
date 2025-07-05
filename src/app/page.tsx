@@ -1,18 +1,10 @@
-// src/app/page.tsx
-'use client';
-
-// This directive makes this a Client Component, allowing useState and useEffect
+"use client"; // This directive should be at the very top
 
 import { useState } from 'react';
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card"; // Remove unused imports
-import { quotes as allQuotes } from "../data/quotes"; // Changed from "@/data/quotes"
-
-interface Quote {
-  text: string;
-  topic: string;
-}
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card"; // CORRECTED: Removed unused CardDescription, CardHeader, CardTitle
+import { quotes, Quote } from '@/data/quotes'; // CORRECTED: Changed allQuotes to quotes and confirmed path
 
 export default function QuoteGenerator() {
   const [topic, setTopic] = useState<string>('');
@@ -20,7 +12,7 @@ export default function QuoteGenerator() {
 
   const generateQuotes = () => {
     // Filter quotes based on topic (case-insensitive)
-    const filteredQuotes = allQuotes.filter(quote =>
+    const filteredQuotes = quotes.filter(quote => // CORRECTED: Used 'quotes'
       quote.topic.toLowerCase().includes(topic.toLowerCase())
     );
 
@@ -28,7 +20,7 @@ export default function QuoteGenerator() {
     let quotesToShow: Quote[] = [];
     if (topic === '' || filteredQuotes.length === 0) {
       // Get 3 random unique quotes if no specific topic or no matches
-      const shuffledQuotes = [...allQuotes].sort(() => 0.5 - Math.random());
+      const shuffledQuotes = [...quotes].sort(() => 0.5 - Math.random()); // CORRECTED: Used 'quotes'
       quotesToShow = shuffledQuotes.slice(0, 3);
     } else {
       // Otherwise, get 3 random unique quotes from the filtered list
@@ -84,17 +76,6 @@ export default function QuoteGenerator() {
               </Card>
             ))}
           </div>
-        )}
-
-        {displayedQuotes.length === 0 && topic !== '' && (
-          <p className="text-center text-gray-400 mt-8">
-            No quotes found for "{topic}". Try a different topic or click Generate Quotes again for random ones.
-          </p>
-        )}
-        {displayedQuotes.length === 0 && topic === '' && (
-          <p className="text-center text-gray-400 mt-8">
-            Enter a topic above and click 'Generate Quotes' to find inspiration!
-          </p>
         )}
       </div>
     </main>
