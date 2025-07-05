@@ -6,7 +6,7 @@
 import { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card"; // Remove unused imports
 import { quotes as allQuotes } from "../data/quotes"; // Changed from "@/data/quotes"
 
 interface Quote {
