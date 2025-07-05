@@ -1,10 +1,11 @@
 "use client"; // This directive should be at the very top
-
+import { quotes } from '@/data/quotes';
+import type { Quote } from '@/data/quotes'; // This is crucialrm -rf node_modules package-lock.json
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card"; // CORRECTED: Removed unused CardDescription, CardHeader, CardTitle
-import { quotes, Quote } from '@/data/quotes'; // CORRECTED: Changed allQuotes to quotes and confirmed path
+
 
 export default function QuoteGenerator() {
   const [topic, setTopic] = useState<string>('');
